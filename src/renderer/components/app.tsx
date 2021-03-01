@@ -1,8 +1,9 @@
-import { ipcRenderer } from 'electron';
-import React, { useState, useEffect, useCallback } from 'react';
-import { Container, TextField } from '@material-ui/core';
-import { FILE_EVENTS, saveFile, FileInfoType } from '../../fileIO';
-import Menu from './menu';
+import { ipcRenderer } from "electron";
+import React, { useState, useEffect, useCallback } from "react";
+import { Container, TextField } from "@material-ui/core";
+import { FILE_EVENTS, saveFile, FileInfoType } from "../../fileIO";
+import Menu from "./menu";
+import EditPage from "./pages/EditPage";
 
 const openFileDialog = (): void => {
   ipcRenderer.send(FILE_EVENTS.OPEN_DIALOG);
@@ -13,8 +14,8 @@ const openSaveAsDialog = (fileInfo: FileInfoType): void => {
 };
 
 const App: React.FC = () => {
-  const [text, setText] = useState('');
-  const [fileName, setFileName] = useState('');
+  const [text, setText] = useState("");
+  const [fileName, setFileName] = useState("");
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value);
@@ -25,8 +26,8 @@ const App: React.FC = () => {
       saveFile(fileName, text);
     } else {
       openSaveAsDialog({
-        fileName: '',
-        fileText: text
+        fileName: "",
+        fileText: text,
       });
     }
   }, [fileName, text]);
@@ -34,7 +35,7 @@ const App: React.FC = () => {
   const handleFileSaveAs = useCallback(() => {
     openSaveAsDialog({
       fileName: fileName,
-      fileText: text
+      fileText: text,
     });
   }, [fileName, text]);
 
@@ -54,30 +55,31 @@ const App: React.FC = () => {
     };
   }, []);
 
-  return (
-    <Container>
-      <Menu
-        onFileOpen={openFileDialog}
-        onFileSave={handleFileSave}
-        onFileSaveAs={handleFileSaveAs}
-      />
-      <TextField
-        multiline
-        fullWidth
-        variant="outlined"
-        rows={10}
-        rowsMax={20}
-        value={text}
-        inputProps={{
-          style: {
-            fontSize: 14
-          }
-        }}
-        onChange={handleChange}
-        helperText={fileName || '[Untitled]'}
-      />
-    </Container>
-  );
+  // return (
+  //   <Container>
+  //     <Menu
+  //       onFileOpen={openFileDialog}
+  //       onFileSave={handleFileSave}
+  //       onFileSaveAs={handleFileSaveAs}
+  //     />
+  //     <TextField
+  //       multiline
+  //       fullWidth
+  //       variant="outlined"
+  //       rows={10}
+  //       rowsMax={20}
+  //       value={text}
+  //       inputProps={{
+  //         style: {
+  //           fontSize: 14,
+  //         },
+  //       }}
+  //       onChange={handleChange}
+  //       helperText={fileName || "[Untitled]"}
+  //     />
+  //   </Container>
+  // );
+  return <EditPage />;
 };
 
 export default App;

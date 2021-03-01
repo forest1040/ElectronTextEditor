@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron .",
     "build": "webpack --display-error-details -w",
+    "develop2": "webpack-dev-server --host 0.0.0.0 --hot --config webpack.config.js --config-name electron-renderer",
     "production": "webpack --mode=production",
     "package": "electron-packager . taiyaki --platform=mac --arch=arm64 --electron-version=11.2.3"
   },

@@ -1,0 +1,6 @@
+.DS_Store
+node_modules
+dist/scripts
+dist/main.js
+# electronTextEditor-win32-x64
+package-lock.json

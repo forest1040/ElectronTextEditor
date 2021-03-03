@@ -1,8 +1,7 @@
 import { ipcRenderer } from "electron";
 import React, { useState, useEffect, useCallback } from "react";
-import { Container, TextField } from "@material-ui/core";
+//import { Container, TextField } from "@material-ui/core";
 import { FILE_EVENTS, saveFile, FileInfoType } from "../../fileIO";
-import Menu from "./menu";
 import EditPage from "./pages/EditPage";
 
 const openFileDialog = (): void => {

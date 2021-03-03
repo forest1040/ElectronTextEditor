@@ -192,7 +192,7 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
               noWrap
               className={classes.title}
             >
-              管理画面
+              Taiyaki
             </Typography>
           </Toolbar>
         </AppBar>

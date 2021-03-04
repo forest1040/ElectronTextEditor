@@ -4,7 +4,7 @@ import AceEditor from "react-ace";
 
 import { ipcRenderer } from "electron";
 
-import { Container, TextField } from "@material-ui/core";
+// import { Container, TextField } from "@material-ui/core";
 import Menu from "../menu";
 
 import { FILE_EVENTS, saveFile, FileInfoType } from "../../../fileIO";
@@ -37,9 +37,25 @@ const HomePage: React.FC = () => {
   const [text, setText] = useState("");
   const [fileName, setFileName] = useState("");
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.currentTarget.value);
+  // Dialog選択結果の取得
+  useEffect(() => {
+    ipcRenderer.on(FILE_EVENTS.OPEN_FILE, (_, fileInfo: FileInfoType) => {
+      setText(fileInfo.fileText);
+      setFileName(fileInfo.fileName);
+    });
+    ipcRenderer.on(FILE_EVENTS.SAVE_FILE, (_, newFileName: string) => {
+      setFileName(newFileName);
+    });
+
+    return (): void => {
+      ipcRenderer.removeAllListeners(FILE_EVENTS.OPEN_FILE);
+      ipcRenderer.removeAllListeners(FILE_EVENTS.SAVE_FILE);
+    };
   }, []);
+
+  // const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setText(e.currentTarget.value);
+  // }, []);
 
   const handleFileSave = useCallback(() => {
     if (fileName) {
@@ -67,25 +83,14 @@ const HomePage: React.FC = () => {
         onFileSave={handleFileSave}
         onFileSaveAs={handleFileSaveAs}
       />
-      <TextField
-        multiline
-        fullWidth
-        variant="outlined"
-        rows={10}
-        rowsMax={20}
-        value={text}
-        inputProps={{
-          style: {
-            fontSize: 14,
-          },
-        }}
-        onChange={handleChange}
-        helperText={fileName || "[Untitled]"}
-      />{" "}
       <AceEditor
         name="EDITOR"
         height="600px"
         width="100%"
+        value={text}
+        onChange={(value) => {
+          setText(value);
+        }}
         editorProps={{ $blockScrolling: false }}
       />
     </GenericTemplate>

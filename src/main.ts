@@ -1,5 +1,3 @@
-import os from "os";
-import path from "path";
 import { BrowserWindow, app, dialog, ipcMain } from "electron";
 import {
   FILE_EVENTS,

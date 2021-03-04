@@ -4,7 +4,6 @@ import AceEditor from "react-ace";
 
 import { ipcRenderer } from "electron";
 
-// import { Container, TextField } from "@material-ui/core";
 import Menu from "../menu";
 
 import { FILE_EVENTS, saveFile, FileInfoType } from "../../../fileIO";
@@ -52,10 +51,6 @@ const HomePage: React.FC = () => {
       ipcRenderer.removeAllListeners(FILE_EVENTS.SAVE_FILE);
     };
   }, []);
-
-  // const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setText(e.currentTarget.value);
-  // }, []);
 
   const handleFileSave = useCallback(() => {
     if (fileName) {
